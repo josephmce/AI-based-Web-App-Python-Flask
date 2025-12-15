@@ -2,6 +2,8 @@ import requests  # Import the requests library to handle HTTP requests
 
 import json
 def sentiment_analyzer(text_to_analyse):
+    if not text_to_analyse or not text_to_analyse.strip():
+        return {'label': None, 'score': None, 'message': 'No text entered! Please provide some text.'}
     # URL of the sentiment analysis service
     url = 'https://sn-watson-sentiment-bert.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict'
     # Constructing the request payload in the expected format
@@ -21,5 +23,6 @@ def sentiment_analyzer(text_to_analyse):
     elif response.status_code == 500:
         label = None
         score = None
+        return {'label': None, 'score': None, 'message': 'Invalid input! Try again.'}
     # Returning a dictionary containing sentiment analysis results
     return {'label': label, 'score': score}
